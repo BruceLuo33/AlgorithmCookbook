@@ -33,7 +33,7 @@
 <h3 id = "3.1">LeetCode 206: 反转链表</h3>
 入门级别的链表反转，最开始在 CS61B 中遇到这个问题，而后在 Leetcode 上找到了对应的题目。关键就在于每次翻转要注意保留之前的指针：
 
-<div align=center><img src="https://github.com/BruceLuo33/AlgorithmCookbook/tree/main/pic/list_insert.jpg"/></div>
+<div align=center><img width = "500" height = "250" src="https://user-images.githubusercontent.com/38673091/110267580-16256380-7ffb-11eb-8154-26ade72a1ab5.png"/></div>
 
 
 ```java
