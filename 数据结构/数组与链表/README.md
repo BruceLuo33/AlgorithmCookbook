@@ -21,6 +21,7 @@
 [返回目录](#0)
 
 <h2 id = "2">二、高频题</h2>
+<span id ="2">
 
 总结：
 
@@ -37,6 +38,7 @@
 
 <h3 id = "3.1">LeetCode 206: 反转链表</h3>
 [返回高频题表](#2)
+
 入门级别的链表反转，最开始在 CS61B 中遇到这个问题，而后在 Leetcode 上找到了对应的题目。关键就在于每次翻转要注意保留之前的指针：
 
 <div align=center><img width = "500" height = "250" src="https://user-images.githubusercontent.com/38673091/110267580-16256380-7ffb-11eb-8154-26ade72a1ab5.png"/></div>
@@ -149,6 +151,7 @@ Second swap: 2 -> 3 -> 1 -> 4 (×)
 
 <h3 id = "3.4">LeetCode 21: 删除链表倒数的第 N 个结点</h3>
 [返回高频题表](#2)
+
 很经典的做法：双指针。
 1. 初始化三个指针：sentinel.next = head、first = sentinel、second = sentinel；
    - 注意 first 和 second 指针需要指向sentinel，这样最后 return sentinel.next 才不会传回 head。因为 head 指针实际上没有变化，所以如果 return head 在corner case [1,2] N = 1 的情况下就会返回原始数组
