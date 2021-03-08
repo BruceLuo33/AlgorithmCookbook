@@ -20,7 +20,8 @@
 
 [返回目录](#0)
 
-<span id ="problem"><h2 id = "2">二、高频题</h2></span>
+<h2 id = "2">二、高频题</h2>
+<a name ="problem"></a>
 
 总结：
 
@@ -42,6 +43,8 @@
 
 <div align=center><img width = "500" height = "250" src="https://user-images.githubusercontent.com/38673091/110267580-16256380-7ffb-11eb-8154-26ade72a1ab5.png"/></div>
 
+<details>
+<summary>LeetCode206</summary>
 
 ```java
     public ListNode reverseList(ListNode head) {
@@ -57,7 +60,7 @@
         return prev;
     }
 ```
-
+</details>
 <h3 id = "3.2">LeetCode 24: 两两交换链表中的节点</h3>
 [返回高频题表](#problem)
 
