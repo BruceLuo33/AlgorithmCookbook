@@ -1,5 +1,4 @@
 # 数组与链表
-<span id ="0"></span>
 
 ## [一、知识点](#1)
  - [数组](#1.1)
@@ -21,7 +20,7 @@
 [返回目录](#0)
 
 <h2 id = "2">二、高频题</h2>
-<a name ="problem"></a>
+<span id ="problem"></span>
 
 总结：
 
@@ -83,6 +82,7 @@ Second swap: 2 -> 3 -> 1 -> 4 (×)
 代码如下：
 <details>
 <summary>LeetCode 24 代码</summary>
+
 ```java
     public ListNode swapPairs(ListNode head) {
         if (head == null || head.next == null) return head;
@@ -100,6 +100,7 @@ Second swap: 2 -> 3 -> 1 -> 4 (×)
         return sentinel.next;
     }
 ```
+
 </details>
 
 <h3 id = "3.3">LeetCode 25: k 个一组翻转链表</h3>
@@ -110,6 +111,7 @@ Second swap: 2 -> 3 -> 1 -> 4 (×)
 
 <details>
 <summary>LeetCode25 代码</summary>
+
 ```java
     public ListNode reverseKGroup(ListNode head, int k) {
         if (k == 1 || head == null || head.next == null) return head;
@@ -166,6 +168,7 @@ Second swap: 2 -> 3 -> 1 -> 4 (×)
 
 <details>
 <summary>LeetCode 19 代码</summary>
+
 ```java
     public ListNode removeNthFromEnd(ListNode head, int n) {
         if (head.next == null) return null;
@@ -199,6 +202,7 @@ Second swap: 2 -> 3 -> 1 -> 4 (×)
 
 <details>
 <summary>LeetCode 21 代码</summary>
+
 ```java
     public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
         ListNode sentinel = new ListNode(0);
