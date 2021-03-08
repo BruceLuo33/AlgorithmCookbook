@@ -44,7 +44,7 @@
 <div align=center><img width = "500" height = "250" src="https://user-images.githubusercontent.com/38673091/110267580-16256380-7ffb-11eb-8154-26ade72a1ab5.png"/></div>
 
 <details>
-<summary>LeetCode206</summary>
+<summary>LeetCode 206 代码</summary>
 
 ```java
     public ListNode reverseList(ListNode head) {
@@ -61,6 +61,7 @@
     }
 ```
 </details>
+
 <h3 id = "3.2">LeetCode 24: 两两交换链表中的节点</h3>
 [返回高频题表](#problem)
 
@@ -80,9 +81,10 @@ Second swap: 2 -> 3 -> 1 -> 4 (×)
              2 -> 1 -> 4 -> 3 (√)
 ```
 代码如下：
+<details>
+<summary>LeetCode 24 代码</summary>
 ```java
     public ListNode swapPairs(ListNode head) {
-
         if (head == null || head.next == null) return head;
         ListNode sentinel = new ListNode(0);
         sentinel.next = head;
@@ -96,9 +98,9 @@ Second swap: 2 -> 3 -> 1 -> 4 (×)
             head = tmp;
         }
         return sentinel.next;
-
     }
 ```
+</details>
 
 <h3 id = "3.3">LeetCode 25: k 个一组翻转链表</h3>
 [返回高频题表](#problem)
@@ -106,7 +108,8 @@ Second swap: 2 -> 3 -> 1 -> 4 (×)
 1. 这道题就是之前两题的综合了。首先可以看出有一个反转链表的需求，因此可以将206题的答案作为子函数。
 2. 然后问题就在于找到子链表的方法，如下所示，子链表用 start~end 标识，移动 k 次 end，不越界即为子链表
 
-
+<details>
+<summary>LeetCode25 代码</summary>
 ```java
     public ListNode reverseKGroup(ListNode head, int k) {
         if (k == 1 || head == null || head.next == null) return head;
@@ -132,11 +135,9 @@ Second swap: 2 -> 3 -> 1 -> 4 (×)
             // 这里的 start 相当于之前的 sentinel
             prev = start;
             end = start;
-            
         }
         return sentinel.next;
     }
-
     private ListNode reverseSubList(ListNode head) {
         if (head == null || head.next == null) return head;
         ListNode cur = head;
@@ -150,6 +151,8 @@ Second swap: 2 -> 3 -> 1 -> 4 (×)
         return prev;
     }
 ```
+</details>
+
 
 <h3 id = "3.4">LeetCode 21: 删除链表倒数的第 N 个结点</h3>
 [返回高频题表](#problem)
@@ -160,6 +163,9 @@ Second swap: 2 -> 3 -> 1 -> 4 (×)
 2. 第一个指针 first 先走 n 步
 3. 让两个指针 first 和 second 一起走，知道 first.next == null，此时说明 first 指针已经走到了链表的最末尾，并且 second 也走到了倒数的第 N+ 1 个位置
    - 之所以 second 要走到倒数 N+1 个位置是因为这是单向链表，需要使用 second.next = second.next.next 来删除倒数第 N 个结点。如果直接指向第 N 个结点，就无法删除本身结点了。
+
+<details>
+<summary>LeetCode 19 代码</summary>
 ```java
     public ListNode removeNthFromEnd(ListNode head, int n) {
         if (head.next == null) return null;
@@ -181,6 +187,7 @@ Second swap: 2 -> 3 -> 1 -> 4 (×)
         return sentinel.next;
     }
 ```   
+</details>
 
 
 <h3 id = "3.5">LeetCode 21: 合并两个有序链表</h3>
@@ -189,6 +196,9 @@ Second swap: 2 -> 3 -> 1 -> 4 (×)
 这道题仍然是链表指针的问题，使用一个 move 指针来将两个有序链表合并。
 - 注意：move.next 即为下一个 ListNode，所以不需要将 l1、l2 的链表破坏即可形成新的链表。
 
+
+<details>
+<summary>LeetCode 21 代码</summary>
 ```java
     public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
         ListNode sentinel = new ListNode(0);
@@ -218,3 +228,4 @@ Second swap: 2 -> 3 -> 1 -> 4 (×)
         return sentinel.next;
     }
 ```
+</details>
