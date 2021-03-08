@@ -21,7 +21,7 @@
 
 <h2 id = "2">二、高频题</h2>
 
-<span id ="2"></span>
+<span id ="100"></span>
 
 总结：
 
@@ -30,14 +30,14 @@
 | 链表指针 | 双指针 | [LeetCode 206: 反转链表](https://leetcode-cn.com/problems/reverse-linked-list/) | [Leetcode 206](#3.1) | 简单 |
 | 链表指针 | 三指针 | [LeetCode 24: 两两交换链表中的节点](https://leetcode-cn.com/problems/swap-nodes-in-pairs/) | [Leetcode 24](#3.2) | 中等 |
 | 链表指针 | 双指针 | [LeetCode 5: K个一组反转链表](https://leetcode-cn.com/problems/reverse-nodes-in-k-group/) | [Leetcode 25](#3.3) | 困难 |
-| 链表指针 | 双指针 | [LeetCode 19: 删除链表倒数第 N 个节点](https://leetcode-cn.com/problems/remove-nth-node-from-end-of-list/) | [Leetcode 19](#3.4) | 简单 |
+| 链表指针 | 双指针 | [LeetCode 19: 删除链表倒数第 N 个节点](https://leetcode-cn.com/problems/remove-nth-node-from-end-of-list/) | [Leetcode 19](#3.4) | 中等 |
 | 链表指针 | 迭代法 | [LeetCode 21: 合并两个有序链表](https://leetcode-cn.com/problems/merge-two-sorted-lists/) | [Leetcode 21](#3.5) | 简单 |
 
 
 <h2 id = "3">三、解题笔记</h2>
 
 <h3 id = "3.1">LeetCode 206: 反转链表</h3>
-[返回高频题表](#problem)
+[返回高频题表](#100)
 
 入门级别的链表反转，最开始在 CS61B 中遇到这个问题，而后在 Leetcode 上找到了对应的题目。关键就在于每次翻转要注意保留之前的指针：
 
