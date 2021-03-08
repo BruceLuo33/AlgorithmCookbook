@@ -20,8 +20,7 @@
 
 [返回目录](#0)
 
-<h2 id = "2">二、高频题</h2>
-<span id ="problem"> </span>
+<span id ="problem"><h2 id = "2">二、高频题</h2></span>
 
 总结：
 
