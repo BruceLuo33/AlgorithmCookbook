@@ -34,6 +34,7 @@
 入门级别的链表反转，最开始在 CS61B 中遇到这个问题，而后在 Leetcode 上找到了对应的题目。关键就在于每次翻转要注意保留之前的指针：
 
 ![image](https://user-images.githubusercontent.com/38673091/110266817-964ac980-7ff9-11eb-9ff8-3a7e7b1d3fa5.png)
+<div align=center><img width="500" height="250" src="https://https://github.com/BruceLuo33/AlgorithmCookbook/tree/main/pic/list_insert.jpg"/></div>
 
 
 '''JAVA
