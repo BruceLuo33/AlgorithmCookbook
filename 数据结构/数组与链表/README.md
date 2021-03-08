@@ -2,8 +2,8 @@
 <span id ="0">
 
 ## [一、知识点](#1)
-| [数组](#1.1)  |[链表](#1.2)  
-| :---: | :----: |
+ - [数组](#1.1)
+ - [链表](#1.2)
 
 ## [二、高频题](#2)
 
@@ -31,5 +31,23 @@
 <h2 id = "3">三、解题笔记</h2>
 
 <h3 id = "3.1">LeetCode 206: 反转链表</h3>
-![image](https://user-images.githubusercontent.com/38673091/110266344-8b436980-7ff8-11eb-9fb9-fd81bf53dbe2.png)
+入门级别的链表反转，最开始在 CS61B 中遇到这个问题，而后在 Leetcode 上找到了对应的题目。关键就在于每次翻转要注意保留之前的指针：
+
+![image](https://user-images.githubusercontent.com/38673091/110266817-964ac980-7ff9-11eb-9ff8-3a7e7b1d3fa5.png)
+
+
+'''JAVA
+    public ListNode reverseList(ListNode head) {
+        if (head == null || head.next == null) return head;
+        ListNode cur = head;
+        ListNode prev = null;
+        while (cur != null) {
+            cur = cur.next;
+            head.next = prev;
+            prev = head;
+            head = cur;
+        }
+        return prev;
+    }
+'''
 
