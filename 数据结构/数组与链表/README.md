@@ -24,11 +24,12 @@
 
 总结：
 
- 知识点 | 技巧 | 地址 | 解题笔记 |
-| --- | --- | --- | --- |
-| 链表 | 双指针 | [LeetCode 206: 反转链表](https://leetcode-cn.com/problems/reverse-linked-list/) | [Leetcode 206](#3.1) |
+ 知识点 | 技巧 | 地址 | 解题笔记 | 难度 |
+| --- | --- | --- | --- | --- |
+| 链表 | 双指针 | [LeetCode 206: 反转链表](https://leetcode-cn.com/problems/reverse-linked-list/) | [Leetcode 206](#3.1) | 简单 |
 
 <h2 id = "3">三、解题笔记</h2>
 
 <h3 id = "3.1">LeetCode 206: 反转链表</h3>
+![image](https://user-images.githubusercontent.com/38673091/110266344-8b436980-7ff8-11eb-9fb9-fd81bf53dbe2.png)
 
