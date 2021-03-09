@@ -24,7 +24,11 @@
 
 <h2 id = "2">二、高频题</h2>
 
+[返回目录](#0)
+
 <span id ="100"></span>
+
+
 
 总结：
 
@@ -35,11 +39,18 @@
 | 链表指针 | 双指针 | [LeetCode 5: K个一组反转链表](https://leetcode-cn.com/problems/reverse-nodes-in-k-group/) | [Leetcode 25](#3.3) | 困难 |
 | 链表指针 | 双指针 | [LeetCode 19: 删除链表倒数第 N 个节点](https://leetcode-cn.com/problems/remove-nth-node-from-end-of-list/) | [Leetcode 19](#3.4) | 中等 |
 | 链表指针 | 迭代法 | [LeetCode 21: 合并两个有序链表](https://leetcode-cn.com/problems/merge-two-sorted-lists/) | [Leetcode 21](#3.5) | 简单 |
+| 链表指针 | 双指针 | [LeetCode 141: 环形链表](https://leetcode-cn.com/problems/linked-list-cycle/) | [Leetcode 141](#3.6) | 简单 |
+| 链表指针 | 双指针 | [LeetCode 142: 环形链表II](https://leetcode-cn.com/problems/linked-list-cycle-ii/) | [Leetcode 142](#3.7) | 简单 |
+| 链表指针 | 双指针 | [LeetCode 876: 链表的中间节点](https://leetcode-cn.com/problems/middle-of-the-linked-list/) | [Leetcode 876](#3.8) | 简单 |
+| 链表指针 | 指针 + 哈希 | [LeetCode 146: LRU 缓存机制](https://leetcode-cn.com/problems/lru-cache/) | [Leetcode 146](#3.9) | 简单 |
 
 
 <h2 id = "3">三、解题笔记</h2>
 
 <h3 id = "3.1">LeetCode 206: 反转链表</h3>
+
+[返回高频题](#100)
+
 
 入门级别的链表反转，最开始在 CS61B 中遇到这个问题，而后在 Leetcode 上找到了对应的题目。关键就在于每次翻转要注意保留之前的指针：
 
@@ -65,6 +76,8 @@
 </details>
 
 <h3 id = "3.2">LeetCode 24: 两两交换链表中的节点</h3>
+
+[返回高频题](#100)
 
 这道题是链表反转问题的一个拓展，不同的地方在于 206 题只需要两个指针，这里需要三个指针：
 
@@ -106,6 +119,9 @@ Second swap: 2 -> 3 -> 1 -> 4 (×)
 </details>
 
 <h3 id = "3.3">LeetCode 25: k 个一组翻转链表</h3>
+
+[返回高频题](#100)
+
 
 1. 这道题就是之前两题的综合了。首先可以看出有一个反转链表的需求，因此可以将206题的答案作为子函数。
 2. 然后问题就在于找到子链表的方法，如下所示，子链表用 start~end 标识，移动 k 次 end，不越界即为子链表
@@ -159,6 +175,9 @@ Second swap: 2 -> 3 -> 1 -> 4 (×)
 
 <h3 id = "3.4">LeetCode 21: 删除链表倒数的第 N 个结点</h3>
 
+[返回高频题](#100)
+
+
 很经典的做法：双指针。
 1. 初始化三个指针：sentinel.next = head、first = sentinel、second = sentinel；
    - 注意 first 和 second 指针需要指向sentinel，这样最后 return sentinel.next 才不会传回 head。因为 head 指针实际上没有变化，所以如果 return head 在corner case [1,2] N = 1 的情况下就会返回原始数组
@@ -195,6 +214,9 @@ Second swap: 2 -> 3 -> 1 -> 4 (×)
 
 <h3 id = "3.5">LeetCode 21: 合并两个有序链表</h3>
 
+[返回高频题](#100)
+
+
 这道题仍然是链表指针的问题，使用一个 move 指针来将两个有序链表合并。
 - 注意：move.next 即为下一个 ListNode，所以不需要将 l1、l2 的链表破坏即可形成新的链表。
 
@@ -230,5 +252,202 @@ Second swap: 2 -> 3 -> 1 -> 4 (×)
         move.next = l1 == null ? l2 : l1;
         return sentinel.next;
     }
+```
+</details>
+
+
+<h3 id = "3.6">LeetCode 141: 环形链表</h3>
+
+[返回高频题](#100)
+
+这题是快慢双指针的运用，一个 fast 指针，一个 slow 指针，一开始都指向 head：
+- 然后 fast 每次往前移动两步，slow 每次往前移动一步，当 fast.next 和 fast.next.next 都不为空的情况下，如果二者相等，说明有环
+
+
+<details>
+<summary>LeetCode 141--环形链表 代码</summary>
+
+```java
+    public boolean hasCycle(ListNode head) {
+        if (head == null || head.next == null) return false;
+        ListNode fast = head;
+        ListNode slow = head;
+        while (fast.next != null && fast.next.next != null) {
+            fast = fast.next.next;
+            slow = slow.next;
+            if (fast == slow) {
+                return true;
+            } 
+        }
+        return false;
+    }
+```
+</details>
+
+<h3 id = "3.7">LeetCode 142：环形链表II</h3>
+
+[返回高频题](#100)
+
+1. 先利用找环形链表的技巧，设置两个指针：fast 与 slow，循环至二者相遇，否则返回 null；
+2. 设置一个 chase Node，从起点 head 出发，每次步进一个 node，同时从 fast/slow 节点出发，步进一；
+3. 当 chase 与 fast 相遇，即为环的入口。
+
+<details>
+<summary>LeetCode 142--环形链表II 代码</summary>
+
+```java
+public ListNode detectCycle(ListNode head) {
+    if (head == null || head.next == null) return null;
+    int pos = 0;
+    ListNode fast = new ListNode(-1);
+    ListNode slow = new ListNode(-1);
+    ListNode chase = new ListNode(-1);
+    fast.next = head;
+    slow.next = head;
+    chase.next = head;
+    while (fast.next != null && fast.next.next != null) {
+        fast = fast.next.next;
+        slow = slow.next;
+        if (fast == slow) break;
+    }
+    if (fast != slow) return null;
+    while (chase != slow) {
+        chase = chase.next;
+        slow = slow.next;
+    }
+    return chase;
+}
+```
+</details>
+
+<h3 id = "3.8">LeetCode 876: 链表的中间节点</h3>
+
+[返回高频题](#100)
+
+这题和环形指针一样，仍然是快慢双指针的运用，一个 fast 指针，一个 slow 指针，一开始都指向 head：
+当 fast 走到了最后一个结点的时候，返回 slow.next 即可
+
+<details>
+<summary>LeetCode 141--环形链表 代码</summary>
+
+```java
+    public ListNode middleNode(ListNode head) {
+        if (head == null || head.next == null) return head;
+        ListNode fast = new ListNode(-1);
+        ListNode slow = new ListNode(-1);
+        fast.next = head;
+        slow.next = head;
+        while (fast.next != null && fast.next.next != null) {
+            fast = fast.next.next;
+            slow = slow.next;
+        }
+        return slow.next;
+    }
+```
+</details>
+
+<h3 id = "3.9">LeetCode 146: LRU 缓存机制</h3>
+
+[返回高频题](#100)
+
+这是一个数据结构设计题。使用 HashMap + 双向链表的方式来完成。
+1. 需要新建两个子类：Node 和 DoubleList
+2. Node 类即为双向链表的结点，有前驱后继指针，在 DoubleList 中写关键逻辑方法
+3. DoubleList：remove、removeLast、addFirst、getSize 等方法
+
+<details>
+<summary>LeetCode 146--LRU缓存 代码</summary>
+
+```java
+class LRUCache {
+
+    class Node {
+        int key, val;
+        Node prev, next;
+        public Node (int key, int val) {
+            this.key = key;
+            this.val = val;
+        }
+    }
+
+    class DoubleList {
+        private Node head, tail;
+        int size;
+        public DoubleList () {
+            head = new Node(0, 0);
+            tail = new Node(0, 0);
+            tail.prev = head;
+            head.next = tail;
+            size = 0;
+        }
+
+        public void addFirst(Node x) {
+            size += 1;
+            x.next = head.next;
+            head.next = x;
+            x.prev = head;
+            x.next.prev = x;
+        }
+
+        public void remove(Node x) {
+            size -= 1;
+            x.next.prev = x.prev;
+            x.prev.next = x.next;
+        }
+
+        public Node removeLast() {
+            if (tail.prev == head) return null;
+            size -= 1;
+            Node tmp = tail.prev;
+            tmp.prev.next = tail;
+            tail.prev = tmp.prev;
+            tmp.next = null;
+            tmp.prev = null;
+            return tmp;
+
+        }
+
+        public int size() {
+            return size;
+        }
+
+    }
+
+
+    private DoubleList list;
+    private HashMap<Integer, Node> map;
+    private int capacity;
+
+    public LRUCache(int capacity) {
+        this.capacity = capacity;
+        list = new DoubleList();
+        map = new HashMap<>();
+    }
+    
+    public int get(int key) {
+        if (!map.containsKey(key)) {
+            return -1;
+        }
+        int val = map.get(key).val;
+        put(key, val);
+        return val;
+    }
+    
+    public void put(int key, int value) {
+        Node curNode = new Node(key, value);
+        if (map.containsKey(key)) {
+            list.remove(map.get(key));
+            list.addFirst(curNode);
+            map.put(key, curNode);
+        } else {
+            if (list.size == capacity) {
+                Node lastNode = list.removeLast();
+                map.remove(lastNode.key);
+            }
+            list.addFirst(curNode);
+            map.put(key, curNode);
+        }
+    }
+}
 ```
 </details>
