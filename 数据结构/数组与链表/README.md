@@ -40,9 +40,14 @@
 | 链表指针 | 双指针 | [LeetCode 19: 删除链表倒数第 N 个节点](https://leetcode-cn.com/problems/remove-nth-node-from-end-of-list/) | [Leetcode 19](#3.4) | 中等 |
 | 链表指针 | 迭代法 | [LeetCode 21: 合并两个有序链表](https://leetcode-cn.com/problems/merge-two-sorted-lists/) | [Leetcode 21](#3.5) | 简单 |
 | 链表指针 | 双指针 | [LeetCode 141: 环形链表](https://leetcode-cn.com/problems/linked-list-cycle/) | [Leetcode 141](#3.6) | 简单 |
-| 链表指针 | 双指针 | [LeetCode 142: 环形链表II](https://leetcode-cn.com/problems/linked-list-cycle-ii/) | [Leetcode 142](#3.7) | 简单 |
+| 链表指针 | 双指针 | [LeetCode 142: 环形链表II](https://leetcode-cn.com/problems/linked-list-cycle-ii/) | [Leetcode 142](#3.7) | 中等 |
 | 链表指针 | 双指针 | [LeetCode 876: 链表的中间节点](https://leetcode-cn.com/problems/middle-of-the-linked-list/) | [Leetcode 876](#3.8) | 简单 |
-| 链表指针 | 指针 + 哈希 | [LeetCode 146: LRU 缓存机制](https://leetcode-cn.com/problems/lru-cache/) | [Leetcode 146](#3.9) | 简单 |
+| 链表指针 | 指针 + 哈希 | [LeetCode 146: LRU 缓存机制](https://leetcode-cn.com/problems/lru-cache/) | [Leetcode 146](#3.9) | 中等 |
+| 数组指针 | 左右双指针 | [LeetCode 11：盛最多水的容器](https://leetcode-cn.com/problems/container-with-most-water/) | [Leetcode 11](#3.10) | 中等 |
+| 数组指针 | 前后双指针 | [LeetCode 283：移动零](https://leetcode-cn.com/problems/move-zeroes/) | [Leetcode 283](#3.11) | 简单 |
+| 数组DP | 动态规划 | [LeetCode 70：爬楼梯](https://leetcode-cn.com/problems/climbing-stairs/) | [Leetcode 70](#3.12) | 简单 |
+| 数组指针 | 左右双指针 | [LeetCode 15：三数之和](https://leetcode-cn.com/problems/3sum/) | [Leetcode 15](#3.13) | 中等 |
+
 
 
 <h2 id = "3">三、解题笔记</h2>
@@ -451,3 +456,163 @@ class LRUCache {
 }
 ```
 </details>
+
+<h3 id = "3.10">LeetCode 11：盛最多水的容器</h3>
+
+[返回高频题](#100)
+
+1. 一开始的时候，会想到从最左侧的原点出发，使用双指针，第一个指针从左到右标识左边界，第二个指针从第一个指针的位置开始往右走，依次遍历，每走一步都求一次面积
+2. 但是这个方法的问题在于，复杂度很高，O(n^2) 的复杂度
+3. 联想到剑指 Offer 04，这里我们可以从两端往中间走，只需要一次遍历就能完成
+
+<details>
+<summary>LeetCode 11--盛最多水的容器 代码</summary>
+
+```java
+    public int maxArea(int[] height) {
+        int leftIndex = 0, rightIndex = height.length - 1;
+        int maxArea = (rightIndex - leftIndex) * Math.min(height[rightIndex], height[leftIndex]);
+        while (leftIndex < rightIndex) {
+            if (height[leftIndex] < height[rightIndex]) {
+                leftIndex += 1;
+            } else {
+                rightIndex -= 1;
+            }
+            if (leftIndex < rightIndex) {
+                int tmpArea = (rightIndex - leftIndex) * Math.min(height[rightIndex], height[leftIndex]);
+                maxArea = tmpArea > maxArea ? tmpArea : maxArea;
+            }
+        }
+        return maxArea;
+    }
+```
+</details>
+
+<h3 id = "3.11">LeetCode 283：移动零</h3>
+
+[返回高频题](#100)
+
+属于很经典的双指针了：
+1. 使用两个指针，第一个为 move 指针，从头遍历到末尾
+2. 第二个指针为 lastNonZero 指针，指向从左到右出现的第一个零前面的位置
+
+<details>
+<summary>LeetCode 11--盛最多水的容器 代码</summary>
+
+```java
+    public void moveZeroes(int[] nums) {
+        int move = 0;
+        int lastNonZero = 0;
+        for (move = 0; move < nums.length; move++) {
+            if (nums[move] != 0) {
+                nums[lastNonZero] = nums[move];
+                lastNonZero += 1;
+            }
+        }
+        while (lastNonZero < nums.length) {
+            nums[lastNonZero] = 0;
+            lastNonZero += 1;
+        }
+    }
+```
+</details>
+
+
+
+
+<h3 id = "3.">LeetCode 70：爬楼梯</h3>
+
+[返回高频题](#100)
+
+斐波那契数列的简单移植。
+- 每一个台阶，都是前一个状态的台阶走 1 步或者 2 步上来的，因此状态转移方程也就出来了：
+- third = first + second
+
+<details>
+<summary>LeetCode 70--爬楼梯 代码</summary>
+
+```java
+    public int climbStairs(int n) {
+        if ( n < 2) return n;
+        int first = 1, second = 2;
+        int third = 0;
+        for (int i = 3; i <= n; i++) {
+            third = first + second;
+            first = second;
+            second = third;
+        }
+        return second;
+    }
+```
+</details>
+
+
+
+<h3 id = "3.13">LeetCode 15：三数之和</h3>
+
+[返回高频题](#100)
+
+和 **Leetcode 11 -- 盛最多水的容器** 类似的思路，左右双指针。
+- 注意：如果是简单的固定一个指针，然后另外两个指针从两端往中间走，这样的复杂度仍然会超时
+- 需要用一些判断来取重：即如果两个相邻的数字相同，则指针往中间移动一位
+- 要先对数组排序
+
+<details>
+<summary>LeetCode 15--三数之和 代码</summary>
+
+```java
+    public List<List<Integer>> threeSum(int[] nums) {
+        List<List<Integer>> ans = new ArrayList<>();
+        if (nums == null || nums.length == 0 || nums.length < 3) return ans;
+        int sum;
+        int first, second, third = nums.length - 1;
+        Arrays.sort(nums);
+        int minValue = nums[0] + nums[1] + nums[2];
+        int maxValue = nums[third] + nums[third - 1] + nums[third - 2];
+        if (minValue > 0 || maxValue < 0) {
+            return ans;
+        }
+        for (first = 0; first < nums.length - 2; first++) {
+            if (first > 0 && nums[first] == nums[first - 1]) {
+                continue;
+            }
+            second = first + 1;
+            third = nums.length - 1;
+            while (second < third) {
+                sum = nums[first] + nums[second] + nums[third];
+                if (sum == 0) {
+                    Integer[] subList = {nums[first], nums[second], nums[third]};
+                    ans.add(Arrays.asList(subList));
+                    second += 1;
+                    third -= 1;
+                    while (second < third &&  nums[second] == nums[second - 1]) {
+                        second += 1;
+                    }
+                    while (second < third &&  nums[third] == nums[third + 1]) {
+                        third -= 1;
+                    }
+                } else if (sum < 0) {
+                    second += 1;
+                } else if (sum > 0) {
+                    third -= 1;
+                }
+            }
+        }
+        return ans;
+    }
+```
+</details>
+
+
+<h3 id = "3.">LeetCode ：</h3>
+
+[返回高频题](#100)
+
+<details>
+<summary>LeetCode -- 代码</summary>
+
+```java
+
+```
+</details>
+
