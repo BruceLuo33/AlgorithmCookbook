@@ -11,6 +11,8 @@
 
 ## [三、题解笔记](#2)
 
+
+
 <h2 id = "1">一、知识点</h2>
 
 <h3 id = "1.1">数组</h3>
@@ -49,6 +51,10 @@
 | 数组指针 | 首尾双指针 | [LeetCode 15：三数之和](https://leetcode-cn.com/problems/3sum/) | [Leetcode 15](#3.13) | 中等 |
 | 数组指针 | 前后双指针 | [LeetCode 26：移除排序数组中的重复项](https://leetcode-cn.com/problems/remove-duplicates-from-sorted-array/) | [Leetcode 26](#3.14) | 简单 |
 | 数组指针 | 首尾双指针 | [LeetCode 167：两数之和II](https://leetcode-cn.com/problems/two-sum-ii-input-array-is-sorted/) | [Leetcode 167](#3.15) | 简单 |
+| 数组 | 多次翻转 | [LeetCode 189：旋转数组](https://leetcode-cn.com/problems/rotate-array/) | [Leetcode 189](#3.16) | 中等 |
+| 数组指针 | 双指针 | [LeetCode 88：合并两个有序数组](https://leetcode-cn.com/problems/merge-sorted-array/) | [Leetcode 88](#3.17) | 简单 |
+| 数组 | 双指针/哈希表 | [LeetCode 1：两数之和](https://leetcode-cn.com/problems/two-sum/) | [Leetcode 1](#3.18) | 简单 |
+| 数组 |  | [LeetCode 66：加一](https://leetcode-cn.com/problems/plus-one/) | [Leetcode 66](#3.19) | 简单 |
 
 
 
@@ -674,7 +680,133 @@ class LRUCache {
 ```
 </details>
 
-<h3 id = "3.16">LeetCode  ： II</h3>
+<h3 id = "3.16">LeetCode  189： 旋转数组</h3>
+
+[返回高频题](#100)
+
+这道题有多种方法：
+1. 使用临时数组，然后按照 k%length 的顺序放入原数组的值；
+2. 三次翻转：先翻转整个数组，然后翻转处理后数组的前 [0, k-1] 的子数组，再翻转 [k, len-1] 的子数组；
+3. 循环移动：每次移动 k 步，然后将该位置 n 的值改为 n-k 的值，并用一个临时变量保存，以此类推。
+
+<details>
+<summary>LeetCode -- </summary>
+
+```java
+    public void rotate(int[] nums, int k) {
+        k = k % nums.length;
+        reverse(nums, 0, nums.length - 1);
+        reverse(nums, 0, k-1);
+        reverse(nums, k, nums.length - 1);
+        return;
+    }
+
+    public void reverse(int[] nums, int start, int end) {
+        if (start > end) return;
+        while (start < end) {
+            int tmp = nums[start];
+            nums[start] = nums[end];
+            nums[end] = tmp;
+            start += 1;
+            end -= 1;
+        }
+    }
+```
+</details>
+
+
+
+<h3 id = "3.17">LeetCode 88：合并两个有序数组 </h3>
+
+[返回高频题](#100)
+
+这道题的启发来自于剑指offer.05 替换空格。数组内元素移动的问题，就要考虑移动的复杂度较高，因此可以从后往前移动。
+
+<details>
+<summary>LeetCode 88-- 合并两个有序数组</summary>
+
+```java
+    public void merge(int[] nums1, int m, int[] nums2, int n) {
+        int index = m + n - 1;
+        int firstIndex = m - 1, secondIndex = n - 1;
+        while (firstIndex >= 0 && secondIndex >= 0) {
+            if (nums1[firstIndex] > nums2[secondIndex]) {
+                nums1[index] = nums1[firstIndex];
+                firstIndex -= 1;
+                index -= 1;
+            } else {
+                nums1[index] = nums2[secondIndex];
+                secondIndex -= 1;
+                index -= 1;
+            }
+        }
+        while (secondIndex >= 0) {
+            nums1[index--] = nums2[secondIndex--];
+        }
+        return;
+    }
+```
+</details>
+
+
+<h3 id = "3.18">LeetCode  1： 两数之和</h3>
+
+[返回高频题](#100)
+
+这道题有几种解法：
+1. 暴力双重循环。固定一个指针，然后另一个指针循环地去找 target-nums[i] 是否存在
+2. 首尾双指针。这个技巧在前面的三数之和、两数之和II 中都已经使用过。在这里可以获得比前一种方法更低的时间复杂度，即 Arrays.sort 的复杂度
+3. hashmap。在哈希表中存放(value, pos) 的键值对，每次都去寻找 target-nums[i] 这个差值是否能在 map 中找到
+   - 如果能找到，说明当前的 nums[i] 需要的差值，就是之前遍历过的数组中的某个值，返回 hashMap 中的值即可
+   - 如果找不到，就将当前的 nums[i] 放入 hashMap，这时候它就作为差值，来继续接下来的匹配
+- 时间复杂度：从O(n^2) 降低到 O(NlogN) 进一步降低到了 O(N)
+
+<details>
+<summary>LeetCode 1--两数之和 </summary>
+
+```java
+    public int[] twoSum(int[] nums, int target) {
+        HashMap<Integer, Integer> map = new HashMap<>();
+        for (int i = 0; i < nums.length; i++) {
+            int diff = target - nums[i];
+            if (map.containsKey(diff)) {
+                return new int[] {i, map.get(diff)};
+            }
+            map.put(nums[i], i);
+        }
+        return null;
+    }
+```
+</details>
+
+
+<h3 id = "3.19">LeetCode 66：加一</h3>
+
+[返回高频题](#100)
+
+直接数组本身求解
+
+<details>
+<summary>LeetCode 66-- 加一</summary>
+
+```java
+    public int[] plusOne(int[] digits) {
+        int len = digits.length;
+        for (int i = len - 1; i >= 0; i--) {
+            if (digits[i] != 9) {
+                digits[i] += 1;
+                return digits;
+            }
+            digits[i] = 0;
+        }
+        int[] tmp = new int[len + 1];
+        tmp[0] = 1;
+        return tmp;
+    }
+```
+</details>
+
+<h3 id = "3.20">LeetCode  ： </h3>
 
 [返回高频题](#100)
 
@@ -687,9 +819,7 @@ class LRUCache {
 ```
 </details>
 
-
-
-<h3 id = "3.17">LeetCode  ： II</h3>
+<h3 id = "3.21">LeetCode  ： </h3>
 
 [返回高频题](#100)
 
