@@ -46,7 +46,9 @@
 | 数组指针 | 左右双指针 | [LeetCode 11：盛最多水的容器](https://leetcode-cn.com/problems/container-with-most-water/) | [Leetcode 11](#3.10) | 中等 |
 | 数组指针 | 前后双指针 | [LeetCode 283：移动零](https://leetcode-cn.com/problems/move-zeroes/) | [Leetcode 283](#3.11) | 简单 |
 | 数组DP | 动态规划 | [LeetCode 70：爬楼梯](https://leetcode-cn.com/problems/climbing-stairs/) | [Leetcode 70](#3.12) | 简单 |
-| 数组指针 | 左右双指针 | [LeetCode 15：三数之和](https://leetcode-cn.com/problems/3sum/) | [Leetcode 15](#3.13) | 中等 |
+| 数组指针 | 首尾双指针 | [LeetCode 15：三数之和](https://leetcode-cn.com/problems/3sum/) | [Leetcode 15](#3.13) | 中等 |
+| 数组指针 | 前后双指针 | [LeetCode 26：移除排序数组中的重复项](https://leetcode-cn.com/problems/remove-duplicates-from-sorted-array/) | [Leetcode 26](#3.14) | 简单 |
+| 数组指针 | 首尾双指针 | [LeetCode 167：两数之和II](https://leetcode-cn.com/problems/two-sum-ii-input-array-is-sorted/) | [Leetcode 167](#3.15) | 简单 |
 
 
 
@@ -520,7 +522,7 @@ class LRUCache {
 
 
 
-<h3 id = "3.">LeetCode 70：爬楼梯</h3>
+<h3 id = "3.12">LeetCode 70：爬楼梯</h3>
 
 [返回高频题](#100)
 
@@ -604,15 +606,98 @@ class LRUCache {
 </details>
 
 
-<h3 id = "3.">LeetCode ：</h3>
+<h3 id = "3.14">LeetCode 26：移出排序数组中的重复项</h3>
 
 [返回高频题](#100)
 
+和 283 移动零一样的思路，两个指针，第一个指针从头到尾遍历数组，第二个指针指向最后一个确定的非重复项
+1. 如果两个指针指向的值相等，说明有了重复项，因此第二个指针 sign 就保持不动，只去移动第一个指针
+2. 如果值不相等，说明出现了重复项，因为 sign 指向的是最后一个**确定的**重复项，那么对于 sign + 1 是否重复其实是不关心的，所以，直接将 move 的值赋给 sign + 1 即可，然后两个指针都往前走一步； 
+- 注意：最后返回的是 sign + 1，因为sign 是数组下标，但是需要的是数组的元素个数
 <details>
-<summary>LeetCode -- 代码</summary>
+<summary>LeetCode 26--移出排序数组中的重复项 代码</summary>
+
+```java
+    public int removeDuplicates(int[] nums) {
+        if (nums == null || nums.length == 0) return 0;
+        if (nums.length == 1) return 1;
+        int sign = 0, move = 0;
+        while (move < nums.length) {
+            if (nums[move] != nums[sign]) {
+                sign += 1;
+                nums[sign] = nums[move];
+            }
+            move += 1;
+        }
+        return sign + 1;
+    }
+```
+</details>
+
+<h3 id = "3.15">LeetCode 167 ：两数之和 II</h3>
+
+[返回高频题](#100)
+
+和 3sum 一样的思路，首尾双指针。
+
+<details>
+<summary>LeetCode 167-- 两数之和II代码</summary>
+
+```java
+    public int[] twoSum(int[] numbers, int target) {
+        int[] ans = new int[2];
+        int first = 0, last = numbers.length - 1;
+        int minValue = numbers[0] + numbers[1];
+        int maxValue = numbers[last] + numbers[last - 1];
+        if (minValue > target || maxValue < target) return ans;
+        int sum;
+        while (first < last) {
+            sum = numbers[first] + numbers[last];
+            if (sum == target) {
+                ans[0] = first + 1;
+                ans[1] = last + 1;
+                return ans;
+            } else if (sum < target) {
+                first += 1;
+                while (first < last && numbers[first] == numbers[first - 1]) {
+                    first += 1;
+                }
+            } else {
+                last -= 1;
+                while (first < last && numbers[last] == numbers[last + 1]) {
+                    last -= 1;
+                }
+            }
+        }
+        return ans;
+    }
+```
+</details>
+
+<h3 id = "3.16">LeetCode  ： II</h3>
+
+[返回高频题](#100)
+
+
+<details>
+<summary>LeetCode -- </summary>
 
 ```java
 
 ```
 </details>
 
+
+
+<h3 id = "3.17">LeetCode  ： II</h3>
+
+[返回高频题](#100)
+
+
+<details>
+<summary>LeetCode -- </summary>
+
+```java
+
+```
+</details>
