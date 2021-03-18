@@ -57,6 +57,7 @@ def backtrack(路径, 选择列表):
 | 回溯 |  | [LeetCode 90:子集II](https://leetcode-cn.com/problems/subsets-ii/) | [Leetcode 90](#3.7) | 中等 |
 | 回溯 | 剪枝 | [LeetCode 51:N 皇后](https://leetcode-cn.com/problems/n-queens/) | [Leetcode 51](#3.8) | 困难 |
 | 回溯 | 剪枝 | [LeetCode 52:N 皇后II](https://leetcode-cn.com/problems/n-queens-ii/) | [Leetcode 52](#3.9) | 困难 |
+| 回溯 | 去重（i = start） | [LeetCode 40:组合总和III](https://leetcode-cn.com/problems/combination-sum-iIi/) | [Leetcode 216](#3.10) | 中等 |
 
 
 
@@ -149,7 +150,7 @@ def backtrack(路径, 选择列表):
 - 注意：判断重复的时候，要判断 `used[i-1] == 0`，而不能是 `used[i] == 0`，这是因为 used[i] 的值可能还没有设置
 
 <details>
-<summary>LeetCode  47--全排列II </summary>
+<summary>LeetCode  47--全排列II 代码</summary>
 
 ```java
     public List<List<Integer>> permuteUnique(int[] nums) {
@@ -204,7 +205,7 @@ def backtrack(路径, 选择列表):
 > After 2,2,4 return, it should go to 2,3,3 (due to arg start) instead of 2,3,2. Because 2,2,3 we already reached.
 
 <details>
-<summary>LeetCode 39--组合总和代码 </summary>
+<summary>LeetCode 39--组合总和 代码 </summary>
 
 ```java
     public List<List<Integer>> combinationSum(int[] candidates, int target) {
@@ -245,11 +246,17 @@ def backtrack(路径, 选择列表):
 这道题和上一题很相似，一开始想着用 visited 数组和 i = start 的方式来避免重复，但是会出现下面的情况：
 
 > 输入
+> 
 > [10,1,2,7,6,1,5]
+> 
 > 8
+> 
 > 输出
+> 
 > [[1,1,6],[1,2,5],[1,7],[1,2,5],[1,7],[2,6]]
+> 
 > 预期结果
+> 
 > [[1,1,6],[1,2,5],[1,7],[2,6]]
 
 对应的，在 leetcode 题解区对此做出了解释
@@ -291,7 +298,7 @@ def backtrack(路径, 选择列表):
 - `backtrack(candidates, target - candidates[i], ans, tmp, i + 1);`
 
 <details>
-<summary>LeetCode 40--组合总和II </summary>
+<summary>LeetCode 40--组合总和II 代码</summary>
 
 ```java
     public List<List<Integer>> combinationSum2(int[] candidates, int target) {
@@ -329,7 +336,7 @@ def backtrack(路径, 选择列表):
 使用 i = start 的技巧，这样可以保证不再需要从当前坐标前面获取元素，所以也不需要 visited 数组
 
 <details>
-<summary>LeetCode 77--组合 </summary>
+<summary>LeetCode 77--组合 代码</summary>
 
 ```java
     public List<List<Integer>> combine(int n, int k) {
@@ -363,7 +370,7 @@ def backtrack(路径, 选择列表):
 为了避免出现重复元素，可以使用 i = start 和 visited 数组两个方法，都能得到结果。
 
 <details>
-<summary>LeetCode 78--子集 </summary>
+<summary>LeetCode 78--子集 代码</summary>
 
 ```java
     public List<List<Integer>> subsets(int[] nums) {
@@ -392,7 +399,7 @@ def backtrack(路径, 选择列表):
 从而造成的最后结果有重复子集的情况。
 
 <details>
-<summary>LeetCode 90--子集II </summary>
+<summary>LeetCode 90--子集II 代码</summary>
 
 ```java
     public List<List<Integer>> subsetsWithDup(int[] nums) {
@@ -431,7 +438,7 @@ def backtrack(路径, 选择列表):
 - 可以发现一件事情，在这里同一列、两个斜边都进行了检查是否有 Q 出现，但是没有检查同一行是否有 Q 出现。这是因为 如果某一个单元格通过了 isValid 的检查，发现合适，就会赋值 Q，并且直接移动到下一行，这样就不会出现某一行有两个 Q 的情况。
 
 <details>
-<summary>LeetCode 51--N 皇后 </summary>
+<summary>LeetCode 51--N 皇后 代码</summary>
 
 ```java
     public List<List<String>> solveNQueens(int n) {
@@ -498,7 +505,7 @@ def backtrack(路径, 选择列表):
  - 注意：之前的题目中，都是将 ans 作为参数传入 backtrack 函数，但是在这里不行，这里要将 totalNum 设置为全局变量
 
 <details>
-<summary>LeetCode 52--N 皇后II </summary>
+<summary>LeetCode 52--N 皇后II 代码</summary>
 
 ```java
     int totalNum = 0;
@@ -546,16 +553,32 @@ def backtrack(路径, 选择列表):
 </details>
 
 
-<h3 id = "3.10">LeetCode  ： </h3>
+<h3 id = "3.10">LeetCode 216：组合总和III </h3>
 
 [返回高频题](#100)
 
 
 <details>
-<summary>LeetCode -- </summary>
+<summary>LeetCode 216--组合总和 III 代码 </summary>
 
 ```java
+    public List<List<Integer>> combinationSum3(int k, int n) {
+        List<List<Integer>> ans = new ArrayList<>();
+        backtrack(ans, n, k, new ArrayList<Integer>(), 1);
+        return ans;
+    }
 
+    private void backtrack(List<List<Integer>> ans, int target, int k, ArrayList<Integer> tmp, int start) {
+        if (target == 0  && tmp.size() == k) {
+            ans.add(new ArrayList<>(tmp));
+            return;
+        }
+        for (int i = start; i <= 9; i++) {
+            tmp.add(i);
+            backtrack(ans, target - i, k, tmp, i + 1);
+            tmp.remove(tmp.size() - 1);
+        }
+    }
 ```
 </details>
 
