@@ -57,7 +57,8 @@ def backtrack(路径, 选择列表):
 | 回溯 |  | [LeetCode 90:子集II](https://leetcode-cn.com/problems/subsets-ii/) | [Leetcode 90](#3.7) | 中等 |
 | 回溯 | 剪枝 | [LeetCode 51:N 皇后](https://leetcode-cn.com/problems/n-queens/) | [Leetcode 51](#3.8) | 困难 |
 | 回溯 | 剪枝 | [LeetCode 52:N 皇后II](https://leetcode-cn.com/problems/n-queens-ii/) | [Leetcode 52](#3.9) | 困难 |
-| 回溯 | 去重（i = start） | [LeetCode 40:组合总和III](https://leetcode-cn.com/problems/combination-sum-iIi/) | [Leetcode 216](#3.10) | 中等 |
+| 回溯 | 去重（i = start） | [LeetCode 40:组合总和III](https://leetcode-cn.com/problems/combination-sum-iii/) | [Leetcode 216](#3.10) | 中等 |
+| 回溯 | 字符串处理，边界条件，撤销选择的技巧（subLength） | [LeetCode 92:复原 IP 地址](https://leetcode-cn.com/problems/restore-ip-addresses/submissions/) | [Leetcode 93](#3.11) | 中等 |
 
 
 
@@ -583,7 +584,104 @@ def backtrack(路径, 选择列表):
 </details>
 
 
-<h3 id = "3.11">LeetCode  ： </h3>
+<h3 id = "3.11">LeetCode 93 ：复原 IP 地址 </h3>
+
+[返回高频题](#100)
+
+这道题第一反应就是回溯算法。如下图所示：
+
+![image](https://user-images.githubusercontent.com/38673091/112339053-49097000-8cfa-11eb-9468-ec18c84c6b10.png)
+
+注意这里递归树的图像，以及边界条件的处理。
+
+<details>
+<summary>LeetCode 93--复原 IP 地址（暴力方法） </summary>
+
+```java
+public List<String> restoreIpAddresses(String s) {
+        List<String> result = new ArrayList<>();
+        StringBuilder ip = new StringBuilder();
+
+        for (int a = 1; a < 4; a++) {
+            for (int b = 1; b < 4; b++) {
+                for (int c = 1; c < 4; c++) {
+                    for (int d = 1; d < 4; d++) {
+                        /*
+                         * 1、保障下面subString不会越界
+                         * 2、保障截取的字符串与输入字符串长度相同
+                         * //1、2比较好理解，3比较有意思
+                         * 3、不能保障截取的字符串转成int后与输入字符串长度相同
+                         * 如：字符串010010，a=1，b=1，c=1，d=3，对应字符串0，1，0，010
+                         * 转成int后seg1=0，seg2=1，seg3=0，seg4=10
+                         * //所以需要下面这处判断if (ip.length() == s.length() + 3)
+                         */
+                        if (a + b + c + d == s.length()) {
+                            int seg1 = Integer.parseInt(s.substring(0, a));
+                            int seg2 = Integer.parseInt(s.substring(a, a + b));
+                            int seg3 = Integer.parseInt(s.substring(a + b, a + b + c));
+                            int seg4 = Integer.parseInt(s.substring(a + b + c, a + b + c + d));
+                            // 四个段数值满足0~255
+                            if (seg1 <= 255 && seg2 <= 255 && seg3 <= 255 && seg4 <= 255) {
+                                ip.append(seg1).append(".").append(seg2).append(".").
+                                        append(seg3).append(".").append(seg4);
+                                // 保障截取的字符串转成int后与输入字符串长度相同
+                                // 防止出现 001001001001 经过 parseInt 被转成 1.1.1.1 的情况
+                                if (ip.length() == s.length() + 3) {
+                                    result.add(ip.toString());
+                                }
+                                ip.delete(0, ip.length());
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return result;
+    }
+```
+</details>
+
+
+<details>
+<summary>LeetCode 93--复原IP地址（回溯法） </summary>
+
+```java
+class Solution {
+    public List<String> restoreIpAddresses(String s) {
+        List<String> ans = new ArrayList<>();
+        int len = s.length();
+        if (len > 12 || len < 4) {
+            return ans;
+        }
+        backtrack(ans, s, new StringBuilder(), 0, 0);
+        return ans;
+    }
+
+    private void backtrack(List<String> ans, String s, StringBuilder tmpIp, int idx, int sectionNum) {
+        int tmpIpLen = tmpIp.length();
+        if (idx == s.length() && sectionNum == 4) {
+            ans.add(tmpIp.toString());
+            return;
+        }
+        for (int i = idx; i < s.length(); i++) {
+            String tmp = s.substring(idx, i + 1);
+            if (tmp.length() > 3 || Integer.valueOf(tmp) > 255 || (tmp.length() > 1 && tmp.charAt(0) == '0')) {
+                continue;
+            }
+            tmpIp.append(tmp);
+            if (i != s.length() - 1) {
+                tmpIp.append(".");
+            }
+            backtrack(ans, s, tmpIp, i + 1, sectionNum + 1);
+            tmpIp.setLength(tmpIpLen);
+        }
+    }
+}
+```
+</details>
+
+
+<h3 id = "3.12">LeetCode  ： </h3>
 
 [返回高频题](#100)
 
@@ -596,8 +694,20 @@ def backtrack(路径, 选择列表):
 ```
 </details>
 
+<h3 id = "3.13">LeetCode  ： </h3>
 
-<h3 id = "3.12">LeetCode  ： </h3>
+[返回高频题](#100)
+
+
+<details>
+<summary>LeetCode -- </summary>
+
+```java
+
+```
+</details>
+
+<h3 id = "3.14">LeetCode  ： </h3>
 
 [返回高频题](#100)
 
