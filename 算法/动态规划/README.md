@@ -55,7 +55,7 @@
 | 动态规划 | 上一题的简单拓展 | [LeetCode 63:不同路径II](https://leetcode-cn.com/problems/unique-paths-ii/) | [Leetcode 63](#3.15) | 中等 |
 | 动态规划 | 62 题对路径进行加权 | [LeetCode 64：最小路径和](https://leetcode-cn.com/problems/minimum-path-sum/) | [Leetcode 64](#3.16) | 中等 |
 | 动态规划 | 特殊的矩阵（三角形） | [LeetCode 120：三角形的最小路径和](https://leetcode-cn.com/problems/triangle/) | [Leetcode 120](#3.17) | 中等 |
-| 动态规划 |  | [LeetCode ：]() | [Leetcode ](#3.18) |  |
+| HashSet | O(n) 算法 | [LeetCode 128：最长连续序列](https://leetcode-cn.com/problems/longest-consecutive-sequence/) | [Leetcode 128](#3.18) | 困难 |
 |  |  | [LeetCode ：]() | [Leetcode ](#3.19) |  |
 |  |  | [LeetCode ：]() | [Leetcode ](#3.20) |  |
 
@@ -643,16 +643,35 @@ class Solution {
 
 
 
-<h3 id = "3.18">LeetCode  ： </h3>
+<h3 id = "3.18">LeetCode 128：最长连续序列 </h3>
 
 [返回高频题](#100)
 
+严格来说，这道题不是动态规划，但是因为和 [300.最长递增子序列](#3.11) 和 [1143.最长公共子序列](#3.13) 很相似，因此在这里也放到这里一起
+
+最简单的思路是 sort，但是因为 O(N) 复杂度的限制，所以这里就不用排序。使用 Set 来操作
 
 <details>
-<summary>LeetCode -- </summary>
+<summary>LeetCode 128--代码 </summary>
 
 ```java
-
+    public int longestConsecutive(int[] nums) {
+        HashSet<Integer> set = new HashSet<>();
+        for (int num : nums) {
+            set.add(num);
+        }
+        int ans = 0;
+        for (int num : nums) {
+            if (set.remove(num)) {
+                int left = num;
+                int right = num;
+                while (set.remove(left - 1)) left -= 1;
+                while (set.remove(right + 1)) right += 1;
+                ans = Math.max(ans, right - left + 1);
+            }
+        }
+        return ans;
+    }
 ```
 </details>
 
