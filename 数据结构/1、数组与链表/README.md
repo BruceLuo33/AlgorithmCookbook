@@ -55,6 +55,11 @@
 | 数组指针 | 双指针 | [LeetCode 88：合并两个有序数组](https://leetcode-cn.com/problems/merge-sorted-array/) | [Leetcode 88](#3.17) | 简单 |
 | 数组 | 双指针/哈希表 | [LeetCode 1：两数之和](https://leetcode-cn.com/problems/two-sum/) | [Leetcode 1](#3.18) | 简单 |
 | 数组 |  | [LeetCode 66：加一](https://leetcode-cn.com/problems/plus-one/) | [Leetcode 66](#3.19) | 简单 |
+| 链表 | 双重 while，删除 n-1 个重复元素 | [LeetCode 83：删除排序链表中的重复元素](https://leetcode-cn.com/problems/remove-duplicates-from-sorted-list/) | [Leetcode 83](#3.20) | 简单 |
+| 链表 | 双重 while，删除 n 个重复元素 | [LeetCode 82：删除排序链表中的重复元素II](https://leetcode-cn.com/problems/remove-duplicates-from-sorted-list-ii/) | [Leetcode 82](#3.21) | 中等 |
+| 链表 | 遍历求 len，k 取模 | [LeetCode 61：旋转链表](https://leetcode-cn.com/problems/rotate-list/) | [Leetcode 61](#3.22) | 中等 |
+| 链表 |  | [LeetCode ：]() | [Leetcode ](#3.23) |  |
+| 链表 |  | [LeetCode ：]() | [Leetcode ](#3.24) |  |
 
 
 
@@ -806,7 +811,120 @@ class LRUCache {
 ```
 </details>
 
-<h3 id = "3.20">LeetCode  ： </h3>
+<h3 id = "3.20">LeetCode 83：删除排序链表中的重复元素 </h3>
+
+[返回高频题](#100)
+
+这题是 82 的简单版，见[下一题解析](#3.21)
+
+<details>
+<summary>LeetCode 83--代码 </summary>
+
+```java
+    public ListNode deleteDuplicates(ListNode head) {
+        if (head == null || head.next == null) return head;
+        ListNode sentinel = new ListNode(-1, head);
+        ListNode move = head;
+        ListNode save = sentinel;   
+        while (move != null && move.next != null) {
+            if (move.val == move.next.val) {
+                while (move.next != null && move.val == move.next.val) {
+                    move.next = move.next.next;
+                }
+            }
+            save = move;
+            move = move.next;
+        }
+        return sentinel.next;
+    }
+```
+</details>
+
+<h3 id = "3.21">LeetCode 82：删除排序链表中的重复元素II </h3>
+
+[返回高频题](#100)
+
+两个指针，一个指针移动删除，一个指针用来重新指向删除之后的链表。
+例如对于 2-->3-->3-->3--4：
+1. record 指针一开始指向sentinel，即 move.next.val = 2，然后 move 指向 head.val = 2，往前走，发现 move.val = 2，和 move.next.val = 3 不相等，于是停下（此时 move 还没有移动一步），进行移动：
+   - record = move, move = move.next;
+2. 然后 move 继续往前走，发现 move.val == move.next.val = 3，于是一直去删除节点，直到遇到 move.val == 3 != move.next.val == 4，但是注意，因为 3 就是重复的节点，所以还要把 3 删掉：
+   - record.next = move.next, move = move.next;
+
+<details>
+<summary>LeetCode 82--代码 </summary>
+
+```java
+    public ListNode deleteDuplicates(ListNode head) {
+        if (head == null || head.next == null) return head;
+        ListNode sentinel = new ListNode(-1, head);
+        ListNode move = sentinel.next;
+        ListNode record = sentinel;
+        while (move != null && move.next != null) {
+            if (move.val == move.next.val) {
+                while (move.next != null && move.val == move.next.val) {
+                    move.next = move.next.next;
+                }
+                record.next = move.next;
+                move = move.next;
+            } else {
+                record = move;
+                move = move.next;
+            }
+        }
+        return sentinel.next;
+    }
+```
+</details>
+
+
+<h3 id = "3.22">LeetCode 62：旋转链表 </h3>
+
+[返回高频题](#100)
+
+思路很简单：先遍历，求出链表长度。然后对 k 取模，将 k 之后的 len-k 个节点移动到链表头即可。具体注意事项见代码注释
+
+<details>
+<summary>LeetCode 62--旋转链表代码 </summary>
+
+```java
+    public ListNode rotateRight(ListNode head, int k) {
+        if (head == null || head.next == null || k == 0) return head;
+        int length = 0;
+        ListNode sentinel = new ListNode(-1, head);
+        ListNode move = sentinel;
+        ListNode saveHead = sentinel;
+        while (move != null && move.next != null) {
+            move = move.next;
+            length += 1;
+        }
+        k %= length; // 避免多次循环，直接取模
+        if (k == 0) return head; // 如果 k == 0，这就说明将倒数第 0 个节点旋转，相当于在这里已经抵达了终点，返回
+        // 初始化 move 指针，然后移动 length - k 步
+        // 这里不需要判断 move 和 move.next == null 的情况，因为前面的取模操作已经保证了 k < length（== 的情况已经返回了）
+        move = sentinel;
+        while (k < length) {
+            k += 1;
+            move = move.next;
+        }
+        // 上面的循环之后，move 指针到达了要旋转的位置，即 move 之后的所有节点都将其放到 head 之前
+        // 用一个 saveHead 存储move 后面的节点，即后面的 k 个节点，然后重新让 move 找到这个子链表的尾端，重新指向 head
+        // 最后返回子链表的 “head”，即 save Head
+        saveHead = move.next;
+        move.next = null;
+        move = saveHead;
+        while (move != null && move.next != null) {
+            move = move.next;
+        }
+        move.next = head;
+        return saveHead;
+    }
+```
+</details>
+
+
+
+<h3 id = "3.23">LeetCode  ： </h3>
 
 [返回高频题](#100)
 
@@ -819,7 +937,8 @@ class LRUCache {
 ```
 </details>
 
-<h3 id = "3.21">LeetCode  ： </h3>
+
+<h3 id = "3.24">LeetCode  ： </h3>
 
 [返回高频题](#100)
 
@@ -831,3 +950,4 @@ class LRUCache {
 
 ```
 </details>
+
