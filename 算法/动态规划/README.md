@@ -48,7 +48,7 @@
 | 动态规划、双指针 | 从暴力法逐步优化的思路 | [LeetCode 42：接雨水](https://leetcode-cn.com/problems/trapping-rain-water/) | [Leetcode 42](#3.8) | 困难 |
 | 动态规划 | dp[i][j] 表示 word1[i] 与 word2[j] 之间的距离| [LeetCode 72：编辑距离](https://leetcode-cn.com/problems/edit-distance/) | [Leetcode 72](#3.9) | 困难 |
 | 动态规划 | 冷冻期也是不持有股票的状态 | [LeetCode 309：最佳买卖股票时机含冷冻期](https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock-with-cooldown/) | [Leetcode 309](#3.10) | 中等 |
-| 动态规划 | O(n^2) 解法和二分法 | **[LeetCode 300：最长递增子序列]**(https://leetcode-cn.com/problems/longest-increasing-subsequence/) | [Leetcode 300](#3.11) | 中等 |
+| 动态规划 | O(n^2) 解法和二分法 | **[LeetCode 300：最长递增子序列](https://leetcode-cn.com/problems/longest-increasing-subsequence/)** | [Leetcode 300](#3.11) | 中等 |
 | 动态规划 | amount 和 coins 双重循环 | [LeetCode 322：零钱兑换](https://leetcode-cn.com/problems/coin-change/) | [Leetcode 322](#3.12) | 中等 |
 | 动态规划 | 子序列，不是子数组（连续） | [LeetCode 1143：最长公共子序列](https://leetcode-cn.com/problems/longest-common-subsequence/) | [Leetcode 1143](#3.13) | 中等 |
 | 动态规划 | 简单的基础题 | [LeetCode 62：不同路径](https://leetcode-cn.com/problems/unique-paths/) | [Leetcode 62](#3.14) | 中等 |
