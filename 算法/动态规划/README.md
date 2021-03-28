@@ -56,7 +56,7 @@
 | 动态规划 | 62 题对路径进行加权 | [LeetCode 64：最小路径和](https://leetcode-cn.com/problems/minimum-path-sum/) | [Leetcode 64](#3.16) | 中等 |
 | 动态规划 | 特殊的矩阵（三角形） | [LeetCode 120：三角形的最小路径和](https://leetcode-cn.com/problems/triangle/) | [Leetcode 120](#3.17) | 中等 |
 | HashSet | O(n) 算法 | [LeetCode 128：最长连续序列](https://leetcode-cn.com/problems/longest-consecutive-sequence/) | [Leetcode 128](#3.18) | 困难 |
-|  |  | [LeetCode ：]() | [Leetcode ](#3.19) |  |
+| 动态规划 | 递推公式的分类讨论 | [LeetCode 10：正则表达式匹配](https://leetcode-cn.com/problems/regular-expression-matching/) | [Leetcode 10](#3.19) | 困难 |
 |  |  | [LeetCode ：]() | [Leetcode ](#3.20) |  |
 
 
@@ -676,16 +676,51 @@ class Solution {
 </details>
 
 
-<h3 id = "3.19">LeetCode  ： </h3>
+<h3 id = "3.19">LeetCode 10：正则表达式匹配 </h3>
 
 [返回高频题](#100)
 
+这道题也是剑指 Offer 19，难点主要在于字符 * 的匹配，具体分析见代码
+
 
 <details>
-<summary>LeetCode -- </summary>
+<summary>LeetCode 10--代码 </summary>
 
 ```java
-
+    public boolean isMatch(String s, String p) {
+        char[] sChar = s.toCharArray();
+        char[] pChar = p.toCharArray();
+        int lenOne = sChar.length, lenTwo = pChar.length;
+        boolean[][] patternMatch = new boolean[lenOne + 1][lenTwo + 1];
+        // 初始条件 1，p 为 ""，s 也为 ""，则一定能匹配
+        patternMatch[0][0] = true;
+        // 初始条件 2，p 为 ""，s 不为 ""，那么无法用一个空字符串pattern 去匹配一个完整的字符串，都是 false（默认就是 false，不用处理）
+        // 初始条件 2，p 不为 ""，s 为 ""，那么需要 '*' 才能进行匹配判断：
+        for (int i = 1; i <= lenTwo; i++) {
+            if (pChar[i - 1] == '*') {
+                patternMatch[0][i] = patternMatch[0][i-2];
+            }
+        }
+        // 开始递推
+        for (int i = 1; i <= lenOne; i++) {
+            for (int j = 1; j <= lenTwo; j++) {
+                // 字符 '.' 可以匹配任何字符
+                if (sChar[i - 1] == pChar[j - 1] || pChar[j - 1] == '.') {
+                    patternMatch[i][j] = patternMatch[i-1][j-1];
+                } else if (pChar[j - 1] == '*') {
+                    // 前一个字符相等或者为 '.'，当前可以选择匹配 0，1，多次
+                    if (sChar[i - 1] == pChar[j - 2] || pChar[j - 2] == '.') {
+                        patternMatch[i][j] = patternMatch[i][j-2] || // 匹配 0 次
+                                            patternMatch[i-1][j]; // 匹配 1 或者多次
+                    } else {
+                        // 两个字符串的前一个字符不相等，那么就只能匹配 0 次
+                        patternMatch[i][j] = patternMatch[i][j - 2];
+                    }
+                }
+            }
+        }
+        return patternMatch[lenOne][lenTwo];
+    }
 ```
 </details>
 
